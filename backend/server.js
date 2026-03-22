@@ -23,6 +23,9 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+// ONCE healthcheck (no auth required)
+app.get('/up', (_req, res) => res.json({ ok: true }));
+
 // API routes
 app.use('/api/auth', authRouter);
 app.use('/api/rows', authMiddleware, rowsRouter);

@@ -2,9 +2,9 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - "80:80"
     volumes:
-      - ./data:/data
+      - ./storage:/storage
     environment:
       - NODE_ENV=production
       - JWT_SECRET=${JWT_SECRET:-change-me-in-production}

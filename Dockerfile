@@ -7,21 +7,27 @@ COPY frontend/ .
 RUN npm run build
 
 # Stage 2: Production server
+# Build tools installed and removed in the same layer so better-sqlite3
+# is compiled for the correct target architecture
 FROM node:22-alpine
 WORKDIR /app
+
+RUN apk add --no-cache python3 make g++
 
 COPY backend/package*.json ./
 RUN npm ci --omit=dev
 
+RUN apk del python3 make g++ && rm -rf /var/cache/apk/*
+
 COPY backend/ .
 COPY --from=frontend-build /app/frontend/dist ./public
 
-RUN mkdir -p /data
+RUN mkdir -p /storage
 
-ENV DB_PATH=/data/simplePlan.db
+ENV DB_PATH=/storage/simplePlan.db
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=80
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["node", "server.js"]

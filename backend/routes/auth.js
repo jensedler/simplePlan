@@ -8,7 +8,7 @@ const router = Router();
 const COOKIE_OPTS = {
   httpOnly: true,
   sameSite: 'strict',
-  secure: process.env.NODE_ENV === 'production',
+  secure: process.env.COOKIE_SECURE === 'true', // nur explizit per Env-Var aktivieren
   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 };
 
