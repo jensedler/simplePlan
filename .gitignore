@@ -30,6 +30,12 @@ Thumbs.db
 *.swp
 *.swo
 
+# SQLite database (data persisted via Docker volume)
+data/
+*.db
+*.db-shm
+*.db-wal
+
 # Misc
 .cache/
 tmp/
